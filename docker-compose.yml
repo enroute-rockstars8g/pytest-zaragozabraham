@@ -1,0 +1,42 @@
+version: '3'
+services:
+  postgres_db02:
+    image: postgres:14-alpine
+    container_name: "postgres02"
+    environment:
+      POSTGRES_PASSWORD: "password1234"
+      POSTGRES_DB: "abraham_zaragozadb"
+      POSTGRES_USERNAME: "abraham_zaragoza"
+      POSTGRES_USER: "abraham_zaragoza"
+    ports:
+      - "10002:5502"
+    volumes:
+      - "/home/abraham_zaragoza/postgres:/usr/src/postgres"
+    networks:
+      - our-library-net
+    command: -p 5502
+
+  web02:
+    build: .
+    command: bash -c "python manage.py makemigrations && python manage.py migrate && python manage.py runserver 0.0.0.0:8002"
+    container_name: "django02"
+    depends_on: 
+      - postgres_db02
+    environment:
+      PSQL_DBNAME: "abraham_zaragozadb"
+      PSQL_USERNAME: "abraham_zaragoza"
+      PSQL_PASS: "password1234"
+      PSQL_PASSWORD: "password1234"
+      PSQL_HOST: "172.24.0.4"
+      PSQL_PORT: "5502"
+    volumes:
+    # "RUTA/DEL/SERVIDOR:RUTA/DENTRO/DEL/CONTENEDOR"
+      - "/home/abraham_zaragoza/Django-REST-Exercise:/usr/src/django/library"
+    ports:
+      - "9002:8002"
+    networks:
+      - our-library-net
+networks:
+  our-library-net:
+    external: true
+    driver: bridge
