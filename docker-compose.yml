@@ -27,7 +27,7 @@ services:
       PSQL_USERNAME: "abraham_zaragoza"
       PSQL_PASS: "password1234"
       PSQL_PASSWORD: "password1234"
-      PSQL_HOST: "172.24.0.4"
+      PSQL_HOST: "postgres_db02"
       PSQL_PORT: "5502"
     volumes:
     # "RUTA/DEL/SERVIDOR:RUTA/DENTRO/DEL/CONTENEDOR"

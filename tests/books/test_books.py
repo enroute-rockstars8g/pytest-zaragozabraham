@@ -79,8 +79,21 @@ def test_author_with_monkey(monkeypatch):
 @pytest.mark.django_db
 def test_author_with_monkey_count(monkeypatch):
     author = Author.objects.create(name='Paulo', last_name='Coelho')
-    def monkey_count_patch():
-        return 4
-    monkeypatch.setattr(Author.objects, 'count', monkey_count_patch)
-    assert Author.objects.count() == 4
-    print('Monkey patching...')
+    # def monkey_count_patch():
+    #     return 4
+    # monkeypatch.setattr(Author.objects, 'count', monkey_count_patch)
+    # assert Author.objects.count() == 4
+    # print('Monkey patching...')
+    class AuthorQuerySetMock():
+        def __init__(self):
+            self.some_value = 1
+
+        def count(self):
+            return 4
+    
+    def model_count_mock():
+        return AuthorQuerySetMock()
+    
+    monkeypatch.setattr(Author.objects, 'all', model_count_mock)
+    assert Author.objects.all().count() == 4
+    print('Mocking...')
