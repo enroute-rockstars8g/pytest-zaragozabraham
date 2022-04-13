@@ -26,11 +26,6 @@ jobs:
       - name: Verifying net
         run: |
           docker inspect -f "{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}" postgres02
-      - name: Postgres Backup Restore
-        uses: tj-actions/pg-restore@v4.5
-        with:
-          database_url: "postgres://zaragoza_abraham:password1234@172.18.0.2:5432/postgres02"
-          backup_file: "backups/backup.sql"
       - name: Run docker django container
         run: |
           docker-compose --env-file .env.stg up -d web02
