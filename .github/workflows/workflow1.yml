@@ -22,4 +22,4 @@ jobs:
           docker build -t my-django-image02:2.0.0 .
       - name: Run docker containers
         run: |
-          docker-compose up --env-file .env.stg up --build
+          docker-compose up --env-file .env.stg --build
