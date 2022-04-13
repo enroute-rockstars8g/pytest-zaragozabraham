@@ -29,7 +29,7 @@ jobs:
       - name: Postgres Backup Restore
         uses: tj-actions/pg-restore@v4.5
         with:
-          database_url: "postgres://zaragoza_abraham:password1234@localhost:5502/postgres_db02"
+          database_url: "postgres://zaragoza_abraham:password1234@172.18.0.2:5502/postgres_db02"
           backup_file: "backups/backup.sql"
       - name: Run docker django container
         run: |
